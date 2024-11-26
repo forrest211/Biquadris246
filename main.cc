@@ -24,6 +24,7 @@ int main(int argc, char* argv[]) {
     std::shared_ptr<IBlock> testIBlock2 = std::make_shared<IBlock>();
     std::shared_ptr<IBlock> testIBlock3 = std::make_shared<IBlock>();
     std::shared_ptr<TBlock> testTBlock1 = std::make_shared<TBlock>();
+    std::shared_ptr<TBlock> testTBlock2 = std::make_shared<TBlock>();
     std::shared_ptr<OBlock> testOBlock = std::make_shared<OBlock>();
     std::shared_ptr<StarBlock> testStarBlock = std::make_shared<StarBlock>();
     board1->setNewCurrentBlock(testIBlock1);
@@ -34,7 +35,8 @@ int main(int argc, char* argv[]) {
     board2->setNewCurrentBlock(testIBlock3);
     board2->placeBlock();
     board2->dropBlock();
-    board1->setNewCurrentBlock(testStarBlock);
+    board1->setNewCurrentBlock(testTBlock2);
+    // board1->dropStarBlock();
     board1->placeBlock();
     board1->dropBlock();
     game->notifyObservers();
