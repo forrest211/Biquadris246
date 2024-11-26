@@ -7,6 +7,8 @@
 
 // Observer used for the text-based display
 class TextObserver: public Observer {
+    const int ROWS = 18, COLS = 11;
+    const int BLINDL = 2, BLINDR = 8, BLINDT = 2, BLINDB = 11;
     // Output stream of the Observer
     std::ostream &out = std::cout;
     // Pointer to the Game subject

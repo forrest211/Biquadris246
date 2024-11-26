@@ -47,13 +47,12 @@ void TextObserver::notify() {
 }
 
 void TextObserver::printNormal() {
-    // Body (the board) [TODO: optimize how we output? if it is Player1's turn, don't loop Player 2's board]
-    for (int i = 0; i < 15; ++i) {
-        for (int j = 0; j < 11; ++j) {
+    for (int i = 0; i < ROWS; ++i) {
+        for (int j = 0; j < COLS; ++j) {
             out << game->getState(1, i, j); // State of p1
         }
         cout << "     ";
-        for (int j = 0; j < 11; ++j) {
+        for (int j = 0; j < COLS; ++j) {
             out << game->getState(2, i, j); // State of p2
         }
         out << endl;
@@ -61,10 +60,9 @@ void TextObserver::printNormal() {
 }
 
 void TextObserver::printBlind() {
-    // Body (the board) [TODO: optimize how we output? if it is Player1's turn, don't loop Player 2's board]
-    for (int i = 0; i < 15; ++i) {
-        for (int j = 0; j < 11; ++j) {
-            if (j >= 2 && j <= 8 && i >= 2 && i <= 11) {
+    for (int i = 0; i < ROWS; ++i) {
+        for (int j = 0; j < COLS; ++j) {
+            if (j >= BLINDL && j <= BLINDR && i >= BLINDT && i <= BLINDB) {
                 out << '?';
             }
             else {
@@ -72,8 +70,8 @@ void TextObserver::printBlind() {
             }
         }
         cout << "     ";
-        for (int j = 0; j < 11; ++j) {
-            if (j >= 2 && j <= 8 && i >= 2 && i <= 11) {
+        for (int j = 0; j < COLS; ++j) {
+            if (j >= BLINDL && j <= BLINDR && i >= BLINDT && i <= BLINDB) {
                 out << '?';
             }
             else {

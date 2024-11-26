@@ -12,8 +12,6 @@ class Block : public std::enable_shared_from_this<Block>{
   protected:
     // Char that the Tiles will be made of
     char tileSymbol;
-    // 0 is Horizontal, 1 is Vertical
-    int state = 0; // starts Horizontal
     // Vector of pairs to store the relative coords of the Tiles forming the Block
     std::vector<std::pair<int, int>> coords;
     // Keep track of the following corners to adjust the rotations
@@ -27,7 +25,7 @@ class Block : public std::enable_shared_from_this<Block>{
     virtual ~Block() = 0; // To make class abstract
     virtual Tile getBlockTile() = 0; // THIS SHOULD ONLY BE CALLED WHEN PLACING A TILE ON THE BOARD
     char getBlockSymbol();
-
+    
     // Get the new coords when rotating (give "CW" or "CCW")
     virtual std::vector<std::pair<int, int>> computeRotatedCoords(string dir) const;
     // Actually rotate the block

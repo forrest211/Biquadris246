@@ -66,7 +66,6 @@ void Block::rotate(string dir) {
         topLeft = {rotatedTopRight.first + adjustX, rotatedTopRight.second + adjustY};
         topRight = {rotatedBottomRight.first + adjustX, rotatedBottomRight.second + adjustY};
     }
-    state = 1 - state; // Toggle the state
 }
 
 // New coords for movement

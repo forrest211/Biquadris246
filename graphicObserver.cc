@@ -21,11 +21,11 @@ blindedness: black(?)
 
 GraphicObserver::GraphicObserver(Game *game):game{game} {
     window = std::make_unique<Xwindow>(10*WINDOW_WIDTH, 10*WINDOW_HEIGHT);
-    charGrid1.resize(15, std::vector<char>(11));
-    charGrid2.resize(15, std::vector<char>(11));
+    charGrid1.resize(ROWS, std::vector<char>(COLS));
+    charGrid2.resize(ROWS, std::vector<char>(COLS));
     // Set all to blank initially
-    for (int i = 0; i < 15; ++i) {
-        for (int j = 0; j < 11; ++j) {
+    for (int i = 0; i < ROWS; ++i) {
+        for (int j = 0; j < COLS; ++j) {
             charGrid1[i][j] = ' ';
             charGrid2[i][j] = ' '; // Set both grids initially to blank
         }
@@ -34,14 +34,14 @@ GraphicObserver::GraphicObserver(Game *game):game{game} {
 
 // Notify
 void GraphicObserver::notify() {
-    printBlind();
+    printNormal();
 }
 
 // Print normally
 void GraphicObserver::printNormal() {
-    for (int i = 0; i < 15; ++i) {
+    for (int i = 0; i < ROWS; ++i) {
         // Grid1
-        for (int j = 0; j < 11; ++j) {
+        for (int j = 0; j < COLS; ++j) {
             char c = game->getState(1,i,j);
             // If it was the same symbol as before, skip
             if (c == charGrid1[i][j]) {
@@ -54,7 +54,7 @@ void GraphicObserver::printNormal() {
             }
         }
         // Grid2
-        for (int j = 0; j < 11; ++j) {
+        for (int j = 0; j < COLS; ++j) {
             char c = game->getState(2,i,j);
             // If it was the same symbol as before, skip
             if (c == charGrid2[i][j]) {
@@ -71,10 +71,10 @@ void GraphicObserver::printNormal() {
 
 // Print with blinded effect
 void GraphicObserver::printBlind() {
-    for (int i = 0; i < 15; ++i) {
+    for (int i = 0; i < ROWS; ++i) {
         // Grid1
-        for (int j = 0; j < 11; ++j) {
-            if (j >= 2 && j <= 8 && i >= 2 && i <= 11) {
+        for (int j = 0; j < COLS; ++j) {
+            if (j >= BLINDL && j <= BLINDR && i >= BLINDT && i <= BLINDB) {
                 window->fillRectangle(j * 10, i * 10, 10, 10, Xwindow::Black);
             }
             char c = game->getState(1,i,j);
@@ -90,7 +90,7 @@ void GraphicObserver::printBlind() {
         }
         // Grid2
         for (int j = 0; j < 11; ++j) {
-            if (j >= 2 && j <= 8 && i >= 2 && i <= 11) {
+            if (j >= BLINDL && j <= BLINDR && i >= BLINDT && i <= BLINDB) {
                 window->fillRectangle((j + GRID2LEFT) * 10, i * 10, 10, 10, Xwindow::Black);
             }
             char c = game->getState(2,i,j);
