@@ -2,6 +2,7 @@
 #include "board.h"
 #include "observer.h"
 #include "textObserver.h"
+#include "graphicObserver.h"
 #include "tile.h"
 #include "game.h"
 
@@ -15,7 +16,9 @@ int main(int argc, char* argv[]) {
     Game *game = new Game(0, 1, board1, board2);
     std::vector<Observer*> observers; // Keep a vector of Observer pointers to be deleted at the end
     TextObserver *textObserver = new TextObserver(game);
+    GraphicObserver *graphicObserver = new GraphicObserver(game);
     game->attach(textObserver);
+    game->attach(graphicObserver);
     // IBlock *testIBlock = new IBlock();
     std::shared_ptr<IBlock> testIBlock1 = std::make_shared<IBlock>();
     std::shared_ptr<IBlock> testIBlock2 = std::make_shared<IBlock>();
@@ -33,13 +36,13 @@ int main(int argc, char* argv[]) {
     board2->dropBlock();
     board1->setNewCurrentBlock(testStarBlock);
     board1->placeBlock();
-    game->notifyObservers();
     board1->dropBlock();
     game->notifyObservers();
     
     delete board1;
     delete board2;
     delete textObserver;
+    delete graphicObserver;
     delete game;
     /*
     board1->rotateBlock("CW");

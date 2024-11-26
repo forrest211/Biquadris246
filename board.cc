@@ -9,6 +9,9 @@ Board::Board(){
     // Set all to blank initially
     for (int i = 0; i < 15; ++i) {
         for (int j = 0; j < 11; ++j) {
+            Tile blankTile{' ', false, nullptr};
+            grid[i][j] = blankTile;
+            /*
             if (j % 2 == 0) {
                 Tile blankTile{'#', false, nullptr};
                 grid[i][j] = blankTile;
@@ -17,6 +20,7 @@ Board::Board(){
                 Tile blankTile{'@', false, nullptr};
                 grid[i][j] = blankTile;
             }
+            */
         }
     }
 }
