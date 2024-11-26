@@ -11,17 +11,18 @@
 // Graphic observer
 class GraphicObserver: public Observer {
     // Window for this Observer
-    std::unique_ptr<Xwindow> window;
+    std::unique_ptr<Xwindow> window = nullptr;
     // Pointer to the Game subject
     Game *game;
     // Char version of the grids to check what needs to be redrawn
-    std::vector<char> charGrid1;
-    std::vector<char> charGrid2;
+    std::vector<std::vector<char>> charGrid1;
+    std::vector<std::vector<char>> charGrid2;
 
-    const int WINDOW_WIDTH = 35;
+    const int WINDOW_WIDTH = 50;
     const int WINDOW_HEIGHT = 21;
+    const int GRID2LEFT = 16; // How many tiles Grid2 is shifted
 
-    int getColorForBlock(char c);
+    int getColourForBlock(char c);
 
     public:
         GraphicObserver(Game *game); // Ctor
