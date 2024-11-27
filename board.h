@@ -38,7 +38,7 @@ class Board {
         int clearFullRows(); // Clears full rows from the board and returns the number of cleared rows
         void clearBoard(); // Set all Tiles to blank Tiles
 
-        bool dropStarBlock(); // Drops a StarBlock down the middle. Returns false if can't be placed
+        bool dropStarBlock(Player *player); // Drops a StarBlock down the middle. Returns false if can't be placed
 };
 
 #endif

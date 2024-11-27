@@ -21,13 +21,13 @@ blindedness: black(?)
 
 GraphicObserver::GraphicObserver(Game *game):game{game} {
     window = std::make_unique<Xwindow>(10*WINDOW_WIDTH, 10*WINDOW_HEIGHT);
+    charGrid0.resize(ROWS, std::vector<char>(COLS));
     charGrid1.resize(ROWS, std::vector<char>(COLS));
-    charGrid2.resize(ROWS, std::vector<char>(COLS));
     // Set all to blank initially
     for (int i = 0; i < ROWS; ++i) {
         for (int j = 0; j < COLS; ++j) {
-            charGrid1[i][j] = ' ';
-            charGrid2[i][j] = ' '; // Set both grids initially to blank
+            charGrid0[i][j] = ' ';
+            charGrid1[i][j] = ' '; // Set both grids initially to blank
         }
     }
 }
@@ -42,28 +42,28 @@ void GraphicObserver::printNormal() {
     for (int i = 0; i < ROWS; ++i) {
         // Grid1
         for (int j = 0; j < COLS; ++j) {
-            char c = game->getState(1,i,j);
+            char c = game->getState(PLAYER0,i,j);
+            // If it was the same symbol as before, skip
+            if (c == charGrid0[i][j]) {
+                continue;
+            }
+            else {
+                int colour = getColourForBlock(c);
+                window->fillRectangle(j * 10, i * 10, 10, 10, colour);
+                charGrid0[i][j] = c; // Update the new char
+            }
+        }
+        // Grid2
+        for (int j = 0; j < COLS; ++j) {
+            char c = game->getState(PLAYER1,i,j);
             // If it was the same symbol as before, skip
             if (c == charGrid1[i][j]) {
                 continue;
             }
             else {
                 int colour = getColourForBlock(c);
-                window->fillRectangle(j * 10, i * 10, 10, 10, colour);
+                window->fillRectangle((j + GRID1LEFT) * 10, i * 10, 10, 10, colour);
                 charGrid1[i][j] = c; // Update the new char
-            }
-        }
-        // Grid2
-        for (int j = 0; j < COLS; ++j) {
-            char c = game->getState(2,i,j);
-            // If it was the same symbol as before, skip
-            if (c == charGrid2[i][j]) {
-                continue;
-            }
-            else {
-                int colour = getColourForBlock(c);
-                window->fillRectangle((j + GRID2LEFT) * 10, i * 10, 10, 10, colour);
-                charGrid2[i][j] = c; // Update the new char
             }
         }
     }
@@ -77,31 +77,31 @@ void GraphicObserver::printBlind() {
             if (j >= BLINDL && j <= BLINDR && i >= BLINDT && i <= BLINDB) {
                 window->fillRectangle(j * 10, i * 10, 10, 10, Xwindow::Black);
             }
-            char c = game->getState(1,i,j);
+            char c = game->getState(PLAYER0,i,j);
+            // If it was the same symbol as before, skip
+            if (c == charGrid0[i][j]) {
+                continue;
+            }
+            else {
+                int colour = getColourForBlock(c);
+                window->fillRectangle(j * 10, i * 10, 10, 10, colour);
+                charGrid0[i][j] = c; // Update the new char
+            }
+        }
+        // Grid2
+        for (int j = 0; j < 11; ++j) {
+            if (j >= BLINDL && j <= BLINDR && i >= BLINDT && i <= BLINDB) {
+                window->fillRectangle((j + GRID1LEFT) * 10, i * 10, 10, 10, Xwindow::Black);
+            }
+            char c = game->getState(PLAYER1,i,j);
             // If it was the same symbol as before, skip
             if (c == charGrid1[i][j]) {
                 continue;
             }
             else {
                 int colour = getColourForBlock(c);
-                window->fillRectangle(j * 10, i * 10, 10, 10, colour);
+                window->fillRectangle((j + GRID1LEFT) * 10, i * 10, 10, 10, colour);
                 charGrid1[i][j] = c; // Update the new char
-            }
-        }
-        // Grid2
-        for (int j = 0; j < 11; ++j) {
-            if (j >= BLINDL && j <= BLINDR && i >= BLINDT && i <= BLINDB) {
-                window->fillRectangle((j + GRID2LEFT) * 10, i * 10, 10, 10, Xwindow::Black);
-            }
-            char c = game->getState(2,i,j);
-            // If it was the same symbol as before, skip
-            if (c == charGrid2[i][j]) {
-                continue;
-            }
-            else {
-                int colour = getColourForBlock(c);
-                window->fillRectangle((j + GRID2LEFT) * 10, i * 10, 10, 10, colour);
-                charGrid2[i][j] = c; // Update the new char
             }
         }
     }

@@ -6,10 +6,10 @@ TextObserver::TextObserver(Game *game):game{game}{}
 
 void TextObserver::notify() {
     // Header
-    out << "Level:    " << game->getLevel(1) << "     "
-        << "Level:    " << game->getLevel(2) << endl;
-    out << "Score:    " << game->getScore(1) << "     "
-        << "Score:    " << game->getScore(2) << endl;
+    out << "Level:    " << game->getLevel(PLAYER0) << "     "
+        << "Level:    " << game->getLevel(PLAYER1) << endl;
+    out << "Score:    " << game->getScore(PLAYER0) << "     "
+        << "Score:    " << game->getScore(PLAYER1) << endl;
     out << "-----------     -----------" << endl;
     
     printNormal();
@@ -23,8 +23,8 @@ void TextObserver::notify() {
             bool found = false;
             // If the following does not find, print " "
             for (int k = 0; k < 4; ++k) {
-                if (((game->getNextBlock(1))->getCoords())[k].first == j && ((game->getNextBlock(1))->getCoords())[k].second == i) {
-                    out << (game->getNextBlock(1))->getBlockSymbol();
+                if (((game->getNextBlock(PLAYER0))->getCoords())[k].first == j && ((game->getNextBlock(PLAYER0))->getCoords())[k].second == i) {
+                    out << (game->getNextBlock(PLAYER0))->getBlockSymbol();
                     found = true;
                 }
             }
@@ -35,8 +35,8 @@ void TextObserver::notify() {
             bool found = false;
             // If the following does not find, print " "
             for (int k = 0; k < 4; ++k) {
-                if (((game->getNextBlock(2))->getCoords())[k].first == j && ((game->getNextBlock(2))->getCoords())[k].second == i) {
-                    out << (game->getNextBlock(2))->getBlockSymbol();
+                if (((game->getNextBlock(PLAYER1))->getCoords())[k].first == j && ((game->getNextBlock(PLAYER1))->getCoords())[k].second == i) {
+                    out << (game->getNextBlock(PLAYER1))->getBlockSymbol();
                     found = true;
                 }
             }
@@ -49,11 +49,11 @@ void TextObserver::notify() {
 void TextObserver::printNormal() {
     for (int i = 0; i < ROWS; ++i) {
         for (int j = 0; j < COLS; ++j) {
-            out << game->getState(1, i, j); // State of p1
+            out << game->getState(PLAYER0, i, j); // State of p0
         }
         cout << "     ";
         for (int j = 0; j < COLS; ++j) {
-            out << game->getState(2, i, j); // State of p2
+            out << game->getState(PLAYER1, i, j); // State of p1
         }
         out << endl;
     }
@@ -66,7 +66,7 @@ void TextObserver::printBlind() {
                 out << '?';
             }
             else {
-                out << game->getState(1, i, j); // State of p1
+                out << game->getState(PLAYER0, i, j); // State of p0
             }
         }
         cout << "     ";
@@ -75,7 +75,7 @@ void TextObserver::printBlind() {
                 out << '?';
             }
             else {
-                out << game->getState(2, i, j); // State of p2
+                out << game->getState(PLAYER1, i, j); // State of p1
             }
         }
         out << endl;

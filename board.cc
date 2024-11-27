@@ -60,6 +60,7 @@ void Board::placeBlock() {
     for (const auto& tile : currentBlock->getCoords()) {
         grid[tile.second][tile.first] = currentBlock->getBlockTile(); // Place the new Tile
     }
+    std::cout << "use_count of ptr1: " << currentBlock.use_count() << std::endl;
 }
 
 // Remove the Bloack on the Board (does not modify the Block's coordinates)
@@ -142,7 +143,6 @@ void Board::dropBlock() {
     }
 }
 
-// [TODO]
 // Clear any full rows and shift above Tile downwards if needed
 int Board::clearFullRows() {
     int clearedRows = 0;
@@ -167,7 +167,6 @@ int Board::clearFullRows() {
     return clearedRows;
 }
 
-// [TODO]
 // Shift all Tiles above and including row i down 1
 void Board::shiftDown(int i){
     Tile blankTile{' ', false, nullptr};
@@ -191,8 +190,9 @@ void Board::clearBoard() {
     }
 }
 
-bool Board::dropStarBlock() {
-    std::shared_ptr<Block> star = std::make_shared<StarBlock>();
+// Drop a starBlock down the middle
+bool Board::dropStarBlock(Player *player) {
+    std::shared_ptr<Block> star = std::make_shared<StarBlock>(player);
     std::shared_ptr<Block> temp = currentBlock; // temporarily hold the currentBlock to not lose it
     currentBlock = star;
     if (!tryPlaceBlock()) {

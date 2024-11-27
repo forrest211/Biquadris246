@@ -4,7 +4,6 @@
 class Level {
     protected:
         int level;
-
     public:
         Level(int l);
         virtual ~Level();
