@@ -1,24 +1,35 @@
+cw drop
 drop
+
+cw r drop
 drop
-r r r r 
+
+cw r r drop
 drop
-r r r r 
+
+cw r r r drop
 drop
-cw
-r r r r r r r r 
+
+cw r r r r drop
 drop
-cw
-r r r r r r r r 
+
+cw r r r r r drop
 drop
-cw
-r r r r r r r r r
+
+cw r r r r r r drop
 drop
-cw
-r r r r r r r r r
+
+cw r r r r r r r drop
 drop
-cw
-r r r r r r r r r r
+
+cw r r r r r r r r drop
 drop
-cw
-r r r r r r r r r r
+
+cw r r r r r r r r r drop
+drop
+
+cw r r r r r r r r r r drop
+drop
+
+cw r r r r r r r r r r r drop
 drop

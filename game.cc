@@ -57,6 +57,7 @@ bool Game::switchPlayerTurn() {
     currPlayerPointer->scoreRow(rowsCleared);
     // updating the hi score when the turn ends
     updateHiScore();
+    std::cout << "HISCORE" << hiScore << std::endl;
     // updating Player's Blocks for the next turn, displaying the changes to the
     // Board, and determining whether they have lost
     bool playerLost = updateBlock();
@@ -72,7 +73,7 @@ bool Game::switchPlayerTurn() {
 }
 
 bool Game::updateBlock() {
-    getBoard()->setNewCurrentBlock(getBoard()->getBoardNextBlock());
+    getBoard()->setNewCurrentBlock(getBoard()->nextBlock);
     getBoard()->setNewNextBlock(createBlock(currPlayerPointer->getBlock()));
 
     bool success = getBoard()->tryPlaceBlock();
@@ -184,15 +185,10 @@ void Game::play() {
     gameInit();
     notifyObservers();
     while (true) {
-        
         playTurn(currTurnRowsCleared, currPlayLose);
-        switchPlayerTurn();
-    
-    
-    
-    
+        switchPlayerTurn(); // Clears any special actions, updates the score, and updates the next Block
+        
     }
-
     /*
     // storing the active special actions for the next player
     std::vector<std::string> activeSpecActs;
@@ -282,11 +278,7 @@ bool Game::playTurn(int& rowsCleared, bool& currPlayerLose) {// , std::vector<st
             notifyObservers();
         }
         if (command == "drop") {
-            getBoard()->dropBlock();
-            /*
-            getBoard()->setNewCurrentBlock(getBoard()->nextBlock);
-            getBoard()->setNewNextBlock(createBlock(currPlayerPointer->getBlock()));
-            */
+            getBoard()->dropBlock(); // We will notify the Observers after calculating clears
             break;
         }
         if (command == "lup") {
