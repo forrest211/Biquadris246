@@ -5,9 +5,9 @@
 #include <string>
 #include <unordered_map>
 
-#include "game.h"
-
 using namespace std;
+
+class Game;
 
 class CommandInterpreter {
     Game* game;
@@ -17,7 +17,7 @@ class CommandInterpreter {
 
    public:
     CommandInterpreter(Game* game);
-    ~CommandInterpreter();
+    ~CommandInterpreter() = default;
 
     string parseCommand(int& multilpier) const;
 };

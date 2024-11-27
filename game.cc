@@ -2,8 +2,6 @@
 
 #include <iostream>
 
-#include "board.h"
-
 Game::Game(int seed, string seq0, string seq1, int startLevel)
     : heavySpecAct{false}, hiScore{0}, currPlayerIdx{0}, consec_drop0{0}, consec_drop1{0} {
     // setting up the players
@@ -15,7 +13,7 @@ Game::Game(int seed, string seq0, string seq1, int startLevel)
     board0 = std::make_unique<Board>();
     board1 = std::make_unique<Board>();
     // initializing the command interpreter
-    ci = std::make_unique<CommandInterpreter>();
+    ci = std::make_unique<CommandInterpreter>(this);
 }
 
 // Get the state of one of the Boards
@@ -107,11 +105,12 @@ void Game::restart() {
     p0->restart();
     p1->restart();
     currPlayerPointer = p0.get();
-    board0 = std::make_unique<Board>(this);
-    board1 = std::make_unique<Board>(this);
+    board0 = std::make_unique<Board>();
+    board1 = std::make_unique<Board>();
     clearSpecActs();
     consec_drop0 = 0;
     consec_drop1 = 0;
+    gameInit();
 }
 
 // Tries to drop a 1-by-1 block in the middle column of the current player's board.
@@ -155,9 +154,11 @@ std::vector<std::string> Game::promptForSpecAct(int rowsCleared) {
 }
 
 void Game::promptValSpecAct(std::vector<std::string>& specActs) {
+    /*
     while (!ci->parseSpecAct(specActs)) {
         cout << "Invalid special action. Try again.\n";
     }
+    */
 }
 
 void Game::checkDupSpecAct(std::vector<std::string>& specActs) {
@@ -210,7 +211,9 @@ void Game::play() {
         if (currPlayLose ||
             (currPlayerPointer->turnEnd(currTurnRowsCleared) && !addPenalty()) ||
             switchPlayerTurn()) {
-            bool gameRestart = checkForGameReset();
+            // bool gameRestart = checkForGameReset();
+
+            bool gameRestart = true;
 
             // If the player(s) do wish to restart the game, then we do so, and
             // continue this 'while' loop. Otherwise, we simply break out of it,
@@ -223,7 +226,7 @@ void Game::play() {
                 break;
         }
 
-        activeSpecActs = promptForSpecAct(currTurnRowsCleared);
+        // activeSpecActs = promptForSpecAct(currTurnRowsCleared);
 
         // reset the number of rows cleared for the next player's turn
         currTurnRowsCleared = 0;
@@ -237,7 +240,6 @@ void Game::gameInit() {
     board1->setNewCurrentBlock(createBlock(p1->getBlock()));
     board1->placeBlock();
     board1->setNewNextBlock(createBlock(p1->getBlock()));
-    notifyObservers();
 }
 
 // Most of the mechanics for a player's turn. Some of the things done by this
@@ -423,6 +425,7 @@ bool Game::isBoardBlind(int board) {
     else return board1->isBlind();
 }
 
+/*
 bool Game::checkForGameReset() {
     // prompt text and graphical (if applicable) observers to display a Game Won
     // message, the only acceptable inputs are Y and N
@@ -439,6 +442,7 @@ bool Game::checkForGameReset() {
     // EOF without obtaining a valid input (if any), by default we quit the Game
     return false;
 }
+*/
 
 void Subject::attach(Observer* o) {
     // Add the observer pointer to the back of the vector

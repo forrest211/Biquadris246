@@ -1,11 +1,10 @@
 #include "commandInterpreter.h"
+#include "game.h"
 
 #include <iostream>
 #include <memory>
 #include <regex>
 #include <sstream>
-
-#include "block.h"
 
 using namespace std;
 

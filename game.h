@@ -5,10 +5,10 @@
 #include <vector>
 
 #include "board.h"
-#include "commandInterpreter.h"
 #include "observer.h"
 #include "player.h"
 #include "tile.h"
+#include "commandInterpreter.h"
 
 class Observer;  // forward declaration
 
@@ -115,6 +115,7 @@ class Game : public Subject {
 
    public:
     Game(int seed, string seq0, string seq1, int startLevel);  // Ctor
+    ~Game() override = default;
 
     // Accessors (and settors?)
     int getLevel(int player) const;
